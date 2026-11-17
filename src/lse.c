@@ -11,7 +11,9 @@ struct lse {
     /* M08 (otimizacao opcional): t_elem *fim; */
 };
 /* Stubs intencionalmente incompletos; testes devem falhar ate implementacao. */
-t_lse *lse_criar(void) { return NULL; } /* TODO M02/M03 */
+t_lse *lse_criar(void) {
+     return NULL; 
+    } /* TODO M02/M03 */
 int lse_tamanho(const t_lse *l) { (void)l; return -1; } /* TODO M03 */
 void *lse_primeiro(const t_lse *l) { (void)l; return NULL; } /* TODO M03 */
 int lse_inserir_inicio(t_lse *l, void *c) { (void)l; (void)c; return 0; } /* TODO M04 */
