@@ -1,5 +1,9 @@
 #include "lse.h"
 #include <stddef.h>
+#include "stdlib.h"
+#include "assert.h"
+#include "stdbool.h"
+
 /* Representacao interna: NAO mover para lse.h. */
 typedef struct elem {
     void *carga;
@@ -10,6 +14,7 @@ struct lse {
     int tamanho;
     /* M08 (otimizacao opcional): t_elem *fim; */
 };
+
 
 t_elem* criar_elem_lse(void* carga){
     t_elem* novo = malloc(sizeof(t_elem));
@@ -78,8 +83,70 @@ int lse_inserir_fim(t_lse *lista, void *carga) {
     return 1;
     }
      /* TODO M04 */
-void *lse_remover_inicio(t_lse *l) { (void)l; return NULL; } /* TODO M04 */
-void *lse_buscar(const t_lse *l, const void *ch, t_comparador cmp) { (void)l; (void)ch; (void)cmp; return NULL; } /* TODO M04 */
-void *lse_remover(t_lse *l, const void *ch, t_comparador cmp) { (void)l; (void)ch; (void)cmp; return NULL; } /* TODO M04 */
-int lse_inserir_ordenado(t_lse *l, void *c, t_comparador cmp) { (void)l; (void)c; (void)cmp; return 0; } /* TODO M05 */
-void lse_destruir(t_lse *l, void (*destruir)(void *)) { (void)l; (void)destruir; /* TODO M03 */ }
+void *lse_remover_inicio(t_lse *lista){
+    assert(lista==NULL)
+    if(lista->tamanho==0){
+        return NULL;
+    }
+
+    t_elem* prim= lista->inicio;
+    lista->inicio = prim->prox;
+
+    void* carga = pim->prox;
+    lista->tamanho--;
+    free(prim);
+    return carga;
+    }
+     /* TODO M04 */
+void *lse_buscar(const t_lse *lista, const void *chave, t_lse_comparador ){
+
+    assert(lista!=NULL);
+    t_elem* cam = lista->inicio;
+
+    while(cam!=NULL){
+        if (comparar(chave, cam->carga) == 0){
+            return cam->carga;
+        }else{
+            cam = cam->prox;
+        }
+    }
+} 
+    /* TODO M04 */
+void *lse_remover(t_lse *lista, const void *chave, t_lse_comparador cmp){
+    bool achou=false;
+    t_elem * cam = lista->inicio;
+    t_elem* ant = NULL;
+    while((cam!=NULL) && (!achou)){
+        if(comparar(chave, cam->carga)==0){
+            achou = true;
+        }else{
+            cam = cam->prox;
+        }
+    }
+    if(!achou){
+        return NULL;
+    }else{
+        if(lista->inicio == cam){
+            lista->inicio = cam->prox;
+        }else{
+            ant->prox= cam->prox;
+        }
+        void* carga = cam->carga;
+        free(cam);
+        return carga;
+    }
+    }
+     /* TODO M04 */
+int lse_inserir_ordenado(t_lse *l, void *c, t_lse_comparador cmp) { (void)l; (void)c; (void)cmp; return 0; } /* TODO M05 */
+
+void lse_destruir(t_lse *lista, t_lse_destruir_carga destruir_carga) {
+    t_elem *cam = lista->inicio;
+    while(cam!=NULL){
+        t_elem *prox = cam->prox;
+        destruir_carga(cam->carga);
+        free(cam);
+        cam = prox;
+    }
+    free(lista);
+}
+/* TODO M03 */ 
