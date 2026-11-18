@@ -1,5 +1,7 @@
 #include "lse.h"
+#include <assert.h>
 #include <stddef.h>
+#include <stdlib.h>
 /* Representacao interna: NAO mover para lse.h. */
 typedef struct elem {
     void *carga;
@@ -14,6 +16,10 @@ struct lse {
 
 t_elem* criar_elem_lse(void* carga){
     t_elem* novo = malloc(sizeof(t_elem));
+    
+    if(novo == NULL){
+        return NULL;
+    }
     novo->carga = carga;
     novo->prox = NULL;
 
@@ -43,6 +49,10 @@ void *lse_primeiro(const t_lse *lista) {
 } //ESSE
 
 int lse_inserir_inicio(t_lse *lista, void *carga) { 
+    if(lista == NULL){
+        return 0;
+    }
+
     t_elem* novo = criar_elem_lse(carga);
     if(novo == NULL){
         return 0;
@@ -55,6 +65,7 @@ int lse_inserir_inicio(t_lse *lista, void *carga) {
     lista->tamanho++;
     return 1;
  } // ESSE
+
 int lse_inserir_fim(t_lse *l, void *c) { (void)l; (void)c; return 0; } /* TODO M04 */
 void *lse_remover_inicio(t_lse *l) { (void)l; return NULL; } /* TODO M04 */
 void *lse_buscar(const t_lse *l, const void *ch, t_comparador cmp) { (void)l; (void)ch; (void)cmp; return NULL; } /* TODO M04 */
@@ -64,3 +75,22 @@ int lse_inserir_ordenado(t_lse *l, void *c, t_comparador cmp) { (void)l; (void)c
 void lse_destruir(t_lse *l, void (*destruir)(void *)) {     
     
 } // M03
+
+//Se o professor pedir o lse_destruir:
+/*
+void lse_destruir(t_lse *lista, void (*destruir)(void *)) {
+    if(lista == NULL){
+        return;
+    }
+    t_elem* atual = lista->inicio;
+    while(atual != NULL){
+        t_elem* proximo = atual->prox; 
+        if(destruir != NULL){
+            destruir(atual->carga);
+        }
+        free(atual);
+        atual = proximo;
+    }
+    free(lista);
+}
+*/
