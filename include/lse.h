@@ -4,7 +4,9 @@
 typedef struct lse t_lse;
 
 typedef void(*t_lse_destruir_carga)(void *carga);
-typedef int (*t_lse_comparador)(const void *chave, const void *carga);
+typedef void(*t_lse_visitar)(void *carga);
+typedef t_lse_visitar t_visitar;
+typedef int (*t_lse_comparador)(const void *carga, const void *chave);
 
 t_lse *lse_criar(void);
 int lse_tamanho(const t_lse *lista);

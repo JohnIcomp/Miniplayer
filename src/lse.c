@@ -149,9 +149,40 @@ void *lse_remover(t_lse *lista, const void *chave, t_lse_comparador cmp){
         lista->tamanho--;
         return carga;
     }
-    }
+}
      /* TODO M04 */
-int lse_inserir_ordenado(t_lse *l, void *c, t_lse_comparador cmp) { (void)l; (void)c; (void)cmp; return 0; } /* TODO M05 */
+int lse_inserir_ordenado(t_lse *lse, void *nova_carga, t_lse_comparador comparar) {
+    t_elem* novo = criar_elem_lse(nova_carga);
+    if(novo == NULL){
+        return 0;
+    }
+
+    t_elem* ant =  NULL;
+    t_elem* cam = lse->inicio;
+
+    bool nao_encontrou_posicao = true;
+    while ((cam!=NULL) && (nao_encontrou_posicao)){
+        void* carga= cam->carga;
+        if(comparar(nova_carga, carga)>=0){
+            ant = cam;
+            cam = cam->prox;
+        }else{
+            nao_encontrou_posicao = false;
+        }
+    }
+
+    if(ant == NULL){
+        novo->prox = lse->inicio;
+        lse->inicio = novo;
+    }else{
+        ant->prox = novo;
+        novo->prox = cam;
+    }
+    lse->tamanho++;
+    return 1;
+
+}
+ /* TODO M05 */
 
 void lse_destruir(t_lse *lista, t_lse_destruir_carga destruir_carga) {
     if(lista == NULL){                     
