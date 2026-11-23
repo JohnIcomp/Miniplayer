@@ -4,6 +4,8 @@
 #include "assert.h"
 #include "stdbool.h"
 
+/*jp*/
+
 /* Representacao interna: NAO mover para lse.h. */
 typedef struct elem {
     void *carga;
