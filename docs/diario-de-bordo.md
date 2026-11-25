@@ -35,4 +35,12 @@
 - Evidências de testes: Verificamos inserção no fim, busca de elementos em diferentes posições, remoções no início, meio e fim, chaves duplicadas, cargas genéricas, argumentos inválidos e liberação via `lse_destruir`.
 - Próxima ação: testar busca e remoção (início, meio, fim, chave inexistente) e seguir para a M05 (inserção ordenada).
 
+## Missão M05 — 23/11
+- Integrantes e papéis: João Pedro do Nascimento Seixas (Codificação) e John Kennedy de Almeida Castro (Documentação e teste)
+- Objetivo: fazer a biblioteca receber músicas na posição certa, sem ordenar a coleção inteira depois de cada inserção. Então, vamos implementar o `lse_inserir_ordenado` para resolver isso.
+- O que implementamos: lse_inserir_ordenado.
+- Decisão técnica e justificativa: Optamos por inserir cada elemento já na posição correta, em vez de ordenar a lista depois, o que custa O(n) no pior caso, pois a lista pode ser percorrida até o fim. Utilizamos o callback de comparação para que o critério de ordem (título, duração ou identificador) seja definido por quem usa a lista, mantendo `lse.c` independente do tipo `t_musica`. A inserção aloca apenas o novo nó, sem copiar a carga, e retorna 0, sem alterar a lista, quando os argumentos são inválidos ou a alocação falha.
+- Evidências de testes: 
+- Próxima ação: 
+
 > Duplicar esta seção a cada missão e alternar os papéis na dupla.

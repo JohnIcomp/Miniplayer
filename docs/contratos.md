@@ -130,6 +130,8 @@ Nas funções de busca e remoção, o comparador tem a forma `int comparar(const
 - **Invariantes:** o novo início é o antigo segundo nó. Ao remover o último elemento, `inicio` vira `NULL` e `tamanho` vira zero.
 - **Testes:** `missoes/M04/test_m04.c` — lista vazia, elemento único e remoções seguidas; `tests/test_lse.c` — remoções do início.
 
+### 11. lse_inserir ordenado
+
 ---
 
 ## Invariantes da LSE

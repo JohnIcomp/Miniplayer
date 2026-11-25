@@ -152,6 +152,10 @@ void *lse_remover(t_lse *lista, const void *chave, t_lse_comparador cmp){
 }
      /* TODO M04 */
 int lse_inserir_ordenado(t_lse *lse, void *nova_carga, t_lse_comparador comparar) {
+    if (lse == NULL || comparar == NULL) {
+        return 0;
+    }
+
     t_elem* novo = criar_elem_lse(nova_carga);
     if(novo == NULL){
         return 0;
@@ -161,9 +165,10 @@ int lse_inserir_ordenado(t_lse *lse, void *nova_carga, t_lse_comparador comparar
     t_elem* cam = lse->inicio;
 
     bool nao_encontrou_posicao = true;
+
     while ((cam!=NULL) && (nao_encontrou_posicao)){
         void* carga= cam->carga;
-        if(comparar(nova_carga, carga)>=0){
+        if(comparar(carga, nova_carga)<=0){
             ant = cam;
             cam = cam->prox;
         }else{
