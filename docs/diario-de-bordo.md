@@ -43,4 +43,13 @@
 - Evidências de testes: 
 - Próxima ação: 
 
+## Missão M06 — 25/11
+- Integrantes e papéis: João Pedro do Nascimento Seixas (Codificação) e John Kennedy de Almeida Castro (Documentação e teste)
+- Objetivo: Implementar o TAD Pilha (LIFO) por composição, reutilizando a lista simplesmente encadeada, sem duplicar o encadeamento.
+- O que implementamos: Implementamos pilha_criar, pilha_empilhar,pilha_desempilhar, pilha_topo e pilha_destruir em src/pilha.c. Cada operação delega para uma função da lista: lse_criar, lse_inserir_inicio, lse_remover_inicio, lse_primeiro e lse_destruir.
+- Decisão técnica e justificativa: Optamos por guardar uma lista dentro da pilha (`struct pilha { t_lse *lista; }`) e usar o início da lista como topo, o que mantém empilhar, desempilhar e consultar o topo em O(1); a destruição é O(n). A pilha não copia cargas: pilha_desempilhar devolve a carga sem liberá-la, e pilha_destruir repassa o callback opcional, que pode ser `NULL` quando as cargas pertencem a outra estrutura (como as músicas da biblioteca). Em pilha_criar, a pilha é liberada se a criação da lista falhar, evitando vazamento. Cada função verifica se a pilha é `NULL` antes de delegar, pois lse_remover_inicio usa assert. Usamos cargas diferentes de `NULL`, porque `NULL` também indica pilha vazia.
+- Evidências de testes: O `Makefile.incremental` da M06 usa `$(CC)`, que não existia no nosso ambiente (`cc` não encontrado); resolvemos passando `CC=gcc` na chamada do `make`. No PowerShell, o `mkdir -p` do Makefile criou uma pasta "-p" e interrompeu a compilação; passamos a usar o Git Bash, onde o comando funciona.
+- Evidências de testes: Executamos `make CC=gcc -f missoes/M06/Makefile.incremental test_m06`. A compilação ocorreu com `-Wall -Wextra -Wpedantic`, sem avisos, e a saída foi "M06: todos os testes passaram.". O teste cobre ordem LIFO, topo sem remoção, pilhas independentes, destruição com callback e argumentos `NULL`.
+- Próxima ação: Integrar a pilha ao histórico de reprodução na M07.
+
 > Duplicar esta seção a cada missão e alternar os papéis na dupla.
